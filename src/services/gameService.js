@@ -2,7 +2,7 @@ import * as databaseService from "./databaseService"
 import { shuffle } from "lodash"
 
 // Return a shuffled starting deck except 3 camels
-function initDeck() {
+export function initDeck() {
     const amounts = {
         diamants: 6,
         or: 6,
@@ -22,18 +22,18 @@ function initDeck() {
 }
 
 // Draw {count} cards of a deck
-function drawCards(deck, count = 1) {
+export function drawCards(deck, count = 1) {
     let cards = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count && deck.length != 0; i++) {
         cards.push(deck.shift());
     }
     return cards;
 }
 
 // Transfer camels from players hand (_players[i].hand) to their herd (_players[i].camelsCount)
-function putCamelsFromHandToHerd(game) {
-    let amount = 0
+export function putCamelsFromHandToHerd(game) {
     for (let i = 0; i < 2; i++) {
+        let amount = 0
         game._players[i].hand = game._players[i].hand.filter(item => {
             if (item === "camel") {
                 amount++;
@@ -48,14 +48,14 @@ function putCamelsFromHandToHerd(game) {
 
 // Create a game object
 export function createGame(name) {
-    let gameObj = databaseService.readDB()
+    let gameList = databaseService.getGames()
     let deck = initDeck();
     let handP1 = drawCards(deck, 5);
     let handP2 = drawCards(deck, 5);
     let market = ["camel", "camel", "camel"];
     market = market.concat(drawCards(deck, 2));
     let game = {
-        id: gameObj.list.length,
+        id: gameList.length,
         name: name,
         _deck: deck,
         market: market,
@@ -88,8 +88,7 @@ export function createGame(name) {
         isDone: false
     }
     putCamelsFromHandToHerd(game);
-    gameObj.list.push(game);
-    databaseService.writeDB(gameObj)
+    databaseService.saveGame(game)
     const response = {
         curentPlayerIndex: game.curentPlayerIndex,
         isDone: game.isDone,
