@@ -1,5 +1,12 @@
 name: Continuous integration
-on: [push]
+on: 
+  push:
+    branches:
+      - master
+  pull-request:
+    branches:
+      - 'feature/**'
+      - 'bugfix/**'
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,3 +23,8 @@ jobs:
         run: npm run test
       - name: Run ESLint
         run: npm run lint
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: output/test/code-coverage.html
