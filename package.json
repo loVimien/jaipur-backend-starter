@@ -1,44 +1,44 @@
 {
-  "name": "jaipur-backend",
-  "version": "1.0.0",
-  "description": "Jaipur Backend",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "nodemon --exec babel-node src/index.js -e js,json,yaml --ignore storage/ --ignore '*.test.js'",
-    "start:debug": "nodemon --inspect --exec babel-node src/index.js -e js,json,yaml --ignore storage/ --ignore '*.test.js'",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "test": "jest"
-  },
-  "author": "Julien Usson",
-  "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "helmet": "^4.6.0",
-    "lodash": "^4.17.21",
-    "morgan": "^1.10.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/node": "^7.14.9",
-    "@babel/preset-env": "^7.15.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^27.0.6",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-jest": "^24.4.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-standard": "^4.1.0",
-    "jest": "^27.0.6",
-    "nodemon": "^2.0.12",
-    "prettier": "^2.3.2",
-    "superagent": "^6.1.0",
-    "supertest": "^6.1.4"
-  }
+    "name": "jaipur-backend",
+    "version": "1.0.0",
+    "description": "Jaipur Backend",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "nodemon --exec babel-node src/index.js -e js,json,yaml --ignore storage/ --ignore '*.test.js'",
+        "start:debug": "nodemon --inspect --exec babel-node src/index.js -e js,json,yaml --ignore storage/ --ignore '*.test.js'",
+        "lint": "eslint --fix ./src",
+        "lint:fix": "eslint ./src --fix",
+        "test": "jest"
+    },
+    "author": "Julien Usson",
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "helmet": "^4.6.0",
+        "lodash": "^4.17.21",
+        "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.15.0",
+        "@babel/node": "^7.14.9",
+        "@babel/preset-env": "^7.15.0",
+        "babel-eslint": "^10.1.0",
+        "babel-jest": "^27.0.6",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-plugin-import": "^2.24.0",
+        "eslint-plugin-jest": "^24.4.0",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-promise": "^5.1.0",
+        "eslint-plugin-standard": "^4.1.0",
+        "jest": "^27.0.6",
+        "nodemon": "^2.0.12",
+        "prettier": "^2.3.2",
+        "superagent": "^6.1.0",
+        "supertest": "^6.1.4"
+    }
 }
