@@ -1,7 +1,4 @@
 import * as gameService from "./gameService"
-import request from "supertest"
-import app from "../app"
-import lodash from "lodash"
 
 // Prevent database service to write tests game to filesystem
 jest.mock("fs")
