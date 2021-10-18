@@ -101,7 +101,7 @@ export function createGame(name) {
 }
 
 export function listGames() {
-    let list = databaseService.getGames()
+    const list = databaseService.getGames()
     list.forEach(val => {
         for (const key of Object.keys(val)) {
             if (key.charAt(0) === '_') {
