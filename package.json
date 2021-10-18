@@ -6,7 +6,7 @@
     "scripts": {
         "start": "nodemon --exec babel-node src/index.js -e js,json,yaml --ignore storage/ --ignore '*.test.js'",
         "start:debug": "nodemon --inspect --exec babel-node src/index.js -e js,json,yaml --ignore storage/ --ignore '*.test.js'",
-        "lint": "eslint --fix ./src",
+        "lint": "eslint ./src",
         "lint:fix": "eslint ./src --fix",
         "test": "jest --coverage"
     },
