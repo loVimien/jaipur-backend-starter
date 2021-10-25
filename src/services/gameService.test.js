@@ -70,10 +70,9 @@ describe("Game service", () => {
         expect(game._players[0].camelsCount).toEqual(1)
         expect(game._players[1].camelsCount).toEqual(0)
     })
-    test("should list games", () => {
-        const initial = gameService.listGames()
-        initial.forEach(val => {
-            expect(Object.keys(val)).toEqual(expect.arrayContaining(["id", "name", "market", "tokens", "isDone"]))
-        })
+    test("should remove private data from game", () => {
+        const game = gameService.createGame()
+        expect(Object.keys(game)).toEqual(expect.arrayContaining(["id", "name", "market", "tokens", "isDone"]))
+        expect(Object.keys(game)).toEqual(expect.not.arrayContaining(["_deck", "_players", "_bonusTokens"]))
     })
 })

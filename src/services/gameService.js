@@ -100,14 +100,25 @@ export function createGame(name) {
     return response
 }
 
+export function removePrivateDataFromGame(game) {
+    for (const key of Object.keys(game)) {
+        if (key.charAt(0) === '_') {
+            delete game[key];
+        }
+    }
+    return game
+}
+
 export function listGames() {
     const list = databaseService.getGames()
-    list.forEach(val => {
-        for (const key of Object.keys(val)) {
-            if (key.charAt(0) === '_') {
-                delete val[key];
-            }
-        }
-    })
-    return list;
+    return list.map(removePrivateDataFromGame);
+}
+
+export function gameInfo(id) {
+    const result = databaseService.getGames().filter(elem => elem.id === id);
+    console.log(result)
+    if (result.length === 0) {
+        throw new Error('Value not found');
+    }
+    return removePrivateDataFromGame(result[0]);
 }
