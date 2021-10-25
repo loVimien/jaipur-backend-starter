@@ -11,11 +11,11 @@ let db = []
     // Prevent database service to write tests game to filesystem
 jest.mock("fs")
 jest.mock("lodash")
-jest.mock("databaseService")
+jest.mock("../services/databaseService")
 
 lodash.shuffle.mockImplementation(x => x)
 databaseService.getGames.mockImplementation(() => db)
-databaseService.saveGame.mockImplementation(x => db.append(x))
+databaseService.saveGame.mockImplementation(x => db.push(x))
 
 // TODO: Mock lodash shuffle
 
@@ -36,8 +36,8 @@ describe("Game router", () => {
     })
     test("should list games", async() => {
         const response = await request(app).get("/games")
-        Object.keys(response.body).forEach(val => {
-            expect(val).toEqual(expect.arrayContaining(["id", "name", "market", "tokens", "isDone"]))
+        response.body.forEach(val => {
+            expect(Object.keys(val)).toEqual(expect.arrayContaining(["id", "name", "market", "tokens", "isDone", "currentPlayerIndex"]))
         })
     })
     test("should get game info", async() => {
@@ -49,6 +49,6 @@ describe("Game router", () => {
         expect(response.body.name).toEqual("test")
         db = []
         const response2 = await request(app).get("/games/0")
-        expect(response2.statusCode).toEqual(400)
+        expect(response2.statusCode).toEqual(404)
     })
 })

@@ -60,6 +60,7 @@ export function createGame(name) {
         name: name,
         _deck: deck,
         market: market,
+        currentPlayerIndex: Math.floor(Math.random() * 2),
         _players: [{
                 hand: handP1,
                 camelsCount: 0,
@@ -90,14 +91,7 @@ export function createGame(name) {
     }
     putCamelsFromHandToHerd(game)
     databaseService.saveGame(game)
-    const response = {
-        curentPlayerIndex: game.curentPlayerIndex,
-        isDone: game.isDone,
-        id: game.id,
-        market: game.market,
-        tokens: game.tokens,
-    }
-    return response
+    return game
 }
 
 export function removePrivateDataFromGame(game) {
