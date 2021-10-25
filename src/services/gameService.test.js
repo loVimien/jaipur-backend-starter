@@ -77,3 +77,19 @@ describe("Game service", () => {
         })
     })
 })
+  
+test("should take a good from market to hand", () => {
+  const game = {
+    market: ["camel", "gold", "gold", "spice", "leather"],
+    _players: [
+      { hand: ["camel", "gold"], camelsCount: 0 },
+      { hand: ["gold", "gold"], camelsCount: 0 },
+    ],
+    _deck: ["camel", "leather", "leather"],
+  }
+  gameService.takeGood(game, 0, "gold")
+  expect(game._players[0].hand.length).toEqual(3)
+  expect(game._players[1].hand.length).toEqual(2)
+  expect(game._deck.length).toEqual(2)
+  expect(game.market.length).toEqual(5)
+})
