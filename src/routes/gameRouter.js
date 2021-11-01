@@ -47,3 +47,5 @@ router.put("/games/:id/take-good", function (req, res) {
   }
   res.status(200).json(gameService.takeGood)
 })
+
+//test
