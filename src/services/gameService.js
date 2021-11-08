@@ -133,16 +133,14 @@ export function deleteGame(id) {
     deleteGame(id);
 }
 
-<<<<<<< HEAD
 export function takeGood(game, playerId, good) {
     const idGood = game.market.findIndex((card) => card === good)
     game._players[playerId].hand.push(game.market[idGood])
     game.market.splice(idGood, 1)
     if (game._deck.length > 0) {
-      game.market.push(drawCards(game._deck, 1))
+        game.market.push(drawCards(game._deck, 1))
     }
-  }
-=======
+}
 export function cardNumber(game, playerIndex, card) {
     let count = 0
     game._players[playerIndex].hand.forEach(elem => {
@@ -152,4 +150,3 @@ export function cardNumber(game, playerIndex, card) {
     })
     return count
 }
->>>>>>> 9ed9a3f (Ajout de la fonction cardNumber)
