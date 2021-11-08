@@ -47,19 +47,32 @@ export function putCamelsFromHandToHerd(game) {
     }
 }
 
+export function getFirstPossibleId() {
+    let i = 0;
+    databaseService.getGames().some(val => {
+        if (val.id === i) {
+            i++;
+            return false;
+        } else {
+            return true;
+        }
+    })
+    return i;
+}
+
 // Create a game object
 export function createGame(name) {
-    const gameList = databaseService.getGames()
     const deck = initDeck()
     const handP1 = drawCards(deck, 5)
     const handP2 = drawCards(deck, 5)
     let market = ["camel", "camel", "camel"]
     market = market.concat(drawCards(deck, 2))
     const game = {
-        id: gameList.length,
+        id: getFirstPossibleId(),
         name: name,
         _deck: deck,
         market: market,
+        currentPlayerIndex: Math.floor(Math.random() * 2),
         _players: [{
                 hand: handP1,
                 camelsCount: 0,
@@ -90,44 +103,32 @@ export function createGame(name) {
     }
     putCamelsFromHandToHerd(game)
     databaseService.saveGame(game)
-    const response = {
-        curentPlayerIndex: game.curentPlayerIndex,
-        isDone: game.isDone,
-        id: game.id,
-        market: game.market,
-        tokens: game.tokens,
+    return game
+}
+
+export function removePrivateDataFromGame(game) {
+    for (const key of Object.keys(game)) {
+        if (key.charAt(0) === '_') {
+            delete game[key];
+        }
     }
-    return response
+    return game
 }
 
 export function listGames() {
     const list = databaseService.getGames()
-    list.forEach(val => {
-        for (const key of Object.keys(val)) {
-            if (key.charAt(0) === '_') {
-                delete val[key];
-            }
-        }
-    })
-    return list;
-}
-export function takeGood(game, playerId, good) {
-  const idGood = game.market.findIndex((card) => card === good)
-  game._players[playerId].hand.push(game.market[idGood])
-  game.market.splice(idGood, 1)
-  if (game._deck.length > 0) {
-    game.market.push(drawCards(game._deck, 1))
-  }
+    return list.map(removePrivateDataFromGame);
 }
 
-export function listGames() {
-    const list = databaseService.getGames()
-    list.forEach(val => {
-        for (const key of Object.keys(val)) {
-            if (key.charAt(0) === '_') {
-                delete val[key];
-            }
-        }
-    })
-    return list;
+export function gameInfo(id) {
+    const result = databaseService.getGames().filter(elem => elem.id === id);
+    console.log(result)
+    if (result.length === 0) {
+        throw new Error('Value not found');
+    }
+    return removePrivateDataFromGame(result[0]);
+}
+
+export function deleteGame(id) {
+    deleteGame(id);
 }
