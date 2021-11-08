@@ -33,4 +33,10 @@ describe("Database service", () => {
     expect(games.length).toBe(2)
     expect(games[0].id).toBe(1)
   })
+
+  test("should remove a game", () => {
+    fs.readFileSync.mockImplementation(() => `[{"id": 1}, {"id": 2}]`)
+    databaseService.deleteGame(1)
+    expect(fs.writeFileSync).toHaveBeenCalled()
+  })
 })

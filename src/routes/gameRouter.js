@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import express from "express"
+import { deleteGame } from "../services/databaseService";
 import * as gameService from "../services/gameService"
 const router = express.Router()
 
@@ -17,6 +18,15 @@ router.get("/:id", (req, res) => {
         res.status(200).json(gameService.gameInfo(parseInt(req.params.id)));
     } catch (e) {
         res.status(404).send("Not found");
+    }
+})
+
+router.delete("/:id", (req, res) => {
+    try {
+        deleteGame(parseInt(req.params.id))
+        res.status(200).send("OK")
+    } catch (e) {
+        res.status(404).send("Not found")
     }
 })
 

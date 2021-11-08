@@ -15,6 +15,7 @@ jest.mock("../services/databaseService")
 lodash.shuffle.mockImplementation(x => x)
 databaseService.getGames.mockImplementation(() => db)
 databaseService.saveGame.mockImplementation(x => db.push(x))
+databaseService.deleteGame.mockImplementation(id => { db = db.filter(val => val.id !== id) })
 
 // TODO: Mock lodash shuffle
 
@@ -49,5 +50,16 @@ describe("Game router", () => {
         db = []
         const response2 = await request(app).get("/games/0")
         expect(response2.statusCode).toEqual(404)
+    })
+    test("should remove a game", async() => {
+        await request(app).post("/games");
+        console.log(databaseService.getGames())
+        const resp = await request(app).get("/games");
+        const id = resp.body[0].id
+        const resp2 = await request(app).delete(`/games/${id}`)
+        console.log(databaseService.getGames())
+        expect(resp2.statusCode).toEqual(200)
+        const resp3 = await request(app).get(`/games/${id}`)
+        expect(resp3.statusCode).toEqual(404)
     })
 })

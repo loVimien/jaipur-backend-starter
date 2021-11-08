@@ -47,16 +47,28 @@ export function putCamelsFromHandToHerd(game) {
     }
 }
 
+export function getFirstPossibleId() {
+    let i = 0;
+    databaseService.getGames().some(val => {
+        if (val.id === i) {
+            i++;
+            return false;
+        } else {
+            return true;
+        }
+    })
+    return i;
+}
+
 // Create a game object
 export function createGame(name) {
-    const gameList = databaseService.getGames()
     const deck = initDeck()
     const handP1 = drawCards(deck, 5)
     const handP2 = drawCards(deck, 5)
     let market = ["camel", "camel", "camel"]
     market = market.concat(drawCards(deck, 2))
     const game = {
-        id: gameList.length,
+        id: getFirstPossibleId(),
         name: name,
         _deck: deck,
         market: market,
@@ -115,4 +127,8 @@ export function gameInfo(id) {
         throw new Error('Value not found');
     }
     return removePrivateDataFromGame(result[0]);
+}
+
+export function deleteGame(id) {
+    deleteGame(id);
 }
