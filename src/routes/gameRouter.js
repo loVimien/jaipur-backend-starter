@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import express from "express"
-import { createGame, listGames } from "../services/gameService"
 import * as databaseService from "../services/databaseService"
 import { deleteGame } from "../services/databaseService";
 import * as gameService from "../services/gameService"
@@ -49,7 +48,6 @@ router.put("/games/:id/take-good", function (req, res) {
   res.status(200).json(gameService.takeGood)
 })
 
-//test
 router.get("/:id", (req, res) => {
     try {
         res.status(200).json(gameService.gameInfo(parseInt(req.params.id)));

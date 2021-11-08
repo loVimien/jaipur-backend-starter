@@ -132,3 +132,12 @@ export function gameInfo(id) {
 export function deleteGame(id) {
     deleteGame(id);
 }
+
+export function takeGood(game, playerId, good) {
+    const idGood = game.market.findIndex((card) => card === good)
+    game._players[playerId].hand.push(game.market[idGood])
+    game.market.splice(idGood, 1)
+    if (game._deck.length > 0) {
+      game.market.push(drawCards(game._deck, 1))
+    }
+  }
