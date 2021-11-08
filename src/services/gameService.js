@@ -119,3 +119,15 @@ export function takeGood(game, playerId, good) {
     game.market.push(drawCards(game._deck, 1))
   }
 }
+
+export function listGames() {
+    const list = databaseService.getGames()
+    list.forEach(val => {
+        for (const key of Object.keys(val)) {
+            if (key.charAt(0) === '_') {
+                delete val[key];
+            }
+        }
+    })
+    return list;
+}
