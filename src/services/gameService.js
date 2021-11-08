@@ -75,11 +75,13 @@ export function createGame(name) {
         currentPlayerIndex: Math.floor(Math.random() * 2),
         _players: [{
                 hand: handP1,
+                tokens: [],
                 camelsCount: 0,
                 score: 0,
             },
             {
                 hand: handP2,
+                tokens: [],
                 camelsCount: 0,
                 score: 0,
             },
@@ -141,6 +143,7 @@ export function takeGood(game, playerId, good) {
         game.market.push(drawCards(game._deck, 1))
     }
 }
+
 export function cardNumber(game, playerIndex, card) {
     let count = 0
     game._players[playerIndex].hand.forEach(elem => {
@@ -149,4 +152,21 @@ export function cardNumber(game, playerIndex, card) {
         }
     })
     return count
+}
+
+export function sellCards(game, playerIndex, card, amount) {
+    const numberInHand = cardNumber(game, playerIndex, card)
+    if (amount > numberInHand) {
+        throw new Error("Too few amount of cards in hand")
+    }
+    for (let i = 0; i < amount; i++) {
+        const index = game._players[playerIndex].hand.indexOf(card)
+        game._players[playerIndex].hand.splice(index, 1)
+        game._players[playerIndex].tokens.push(game.tokens[card].pop)
+    }
+    if (amount >= 5) {
+        game._players[playerIndex].tokens.push(game._bonusTokens[5].pop)
+    } else if (amount >= 3) {
+        game._players[playerIndex].tokens.push(game._bonusTokens[amount].pop)
+    }
 }
