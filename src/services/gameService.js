@@ -154,19 +154,25 @@ export function cardNumber(game, playerIndex, card) {
     return count
 }
 
-export function sellCards(game, playerIndex, card, amount) {
+export function sellCards(gameId, playerIndex, card, amount) {
+    let game = databaseService.getGames().filter(elem => elem.id === gameId)[0]
     const numberInHand = cardNumber(game, playerIndex, card)
     if (amount > numberInHand) {
         throw new Error("Too few amount of cards in hand")
-    }
-    for (let i = 0; i < amount; i++) {
-        const index = game._players[playerIndex].hand.indexOf(card)
-        game._players[playerIndex].hand.splice(index, 1)
-        game._players[playerIndex].tokens.push(game.tokens[card].pop)
-    }
-    if (amount >= 5) {
-        game._players[playerIndex].tokens.push(game._bonusTokens[5].pop)
-    } else if (amount >= 3) {
-        game._players[playerIndex].tokens.push(game._bonusTokens[amount].pop)
+    } else if (card in ['diamants', 'argent', 'or'] && amount < 2) {
+        throw new Error("You need to sell 2 cards minuimum for this merchandise")
+    } else if (game.tokens[card].length === 1 && amount < 1) {
+        throw new Error("1 token left for this merchandise, you need to sell 2 cards minimum")
+    } else {
+        for (let i = 0; i < amount; i++) {
+            const index = game._players[playerIndex].hand.indexOf(card)
+            game._players[playerIndex].hand.splice(index, 1)
+            game._players[playerIndex].tokens.push(game.tokens[card].pop)
+        }
+        if (amount >= 5) {
+            game._players[playerIndex].tokens.push(game._bonusTokens[5].pop)
+        } else if (amount >= 3) {
+            game._players[playerIndex].tokens.push(game._bonusTokens[amount].pop)
+        }
     }
 }
